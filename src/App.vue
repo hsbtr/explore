@@ -3,6 +3,29 @@
     <router-view />
   </div>
 </template>
+<script>
+export default {
+  name: "App",
+  data() {
+    return {};
+  },
+  methods: {
+    addSig() {
+      this.$http.base.sigIn({ name: "小火苗" });
+      console.log(this);
+    }
+  },
+  computed: {},
+  watch: {},
+  beforeCreate() {
+    // this.$http.base.csrfToken();
+  },
+  created() {
+    // this.addSig();
+  },
+  mounted() {}
+};
+</script>
 
 <style lang="scss">
 #app {

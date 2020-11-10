@@ -4,9 +4,12 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import VueAxios from "vue-axios";
-import api from "./api/base";
+import api from "./api";
+// import http from "./http";
+// import axios from "axios";
 
 Vue.use(VueAxios, api);
+// Vue.prototype.$api = api;
 
 Vue.config.productionTip = false;
 

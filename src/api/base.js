@@ -1,9 +1,10 @@
 import http from "../http";
 
-const base = {
-  sigin(prams) {
-    return http.post("/sigin", prams);
+export default {
+  csrfToken() {
+    return http.get("/", {});
+  },
+  sigIn(data) {
+    return http.post("/sigin", { data: data });
   }
 };
-
-export default base;
