@@ -11,8 +11,7 @@ export default {
   },
   methods: {
     addSig() {
-      this.$http.base.sigIn({ name: "小火苗" });
-      console.log(this);
+      this.$http.base.sigIn({ name: "三火" });
     }
   },
   computed: {},
@@ -21,7 +20,7 @@ export default {
     // this.$http.base.csrfToken();
   },
   created() {
-    // this.addSig();
+    this.addSig();
   },
   mounted() {}
 };

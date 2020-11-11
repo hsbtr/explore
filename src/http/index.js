@@ -1,4 +1,6 @@
 import Axios from "axios";
+import Qs from "qs";
+import { getCookie } from "./tool";
 
 const axios = Axios.create({
   baseURL: "/api/",
@@ -9,7 +11,10 @@ const axios = Axios.create({
   transformRequest: [
     function(data) {
       // 对 data 进行任意转换处理
-      return JSON.stringify(data);
+      console.log(JSON.stringify(data));
+      console.log(Qs.stringify(data));
+      // return JSON.stringify(data);
+      return Qs.stringify(data);
     }
   ],
   // `withCredentials` 表示跨域请求时是否需要使用凭证
@@ -51,7 +56,7 @@ axios.interceptors.request.use(
       config.method.toLocaleLowerCase() === "get"
         ? {
             Accept: "application/json",
-            "Content-Type": "application/json; charset=UTF-8",
+            "Content-Type": "application/json; charset=UTF-8"
           }
         : {
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -59,6 +64,7 @@ axios.interceptors.request.use(
           },
       config.headers
     );
+    console.log(config);
     return config;
   },
   error => {
@@ -82,13 +88,5 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-function getCookie(name) {
-  const str = document.cookie.split("; ");
-  for (let i = 0; i < str.length; i++){
-    const temp = str[i].split("=");
-    if (temp[0] === name) return unescape(temp[1]);
-  }
-}
 
 export default axios;
