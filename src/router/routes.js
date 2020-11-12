@@ -1,9 +1,15 @@
-import home from "../views/Home";
+import Home from "@/views/Home";
+import Error from "@/views/Error";
 
 export default [
   {
+    path: "*",
+    name: "Error",
+    component: Error
+  },
+  {
     path: "/",
     name: "Home",
-    component: home
+    component: Home
   }
 ];

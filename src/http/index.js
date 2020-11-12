@@ -11,9 +11,7 @@ const axios = Axios.create({
   transformRequest: [
     function(data) {
       // 对 data 进行任意转换处理
-      console.log(JSON.stringify(data));
-      console.log(Qs.stringify(data));
-      // return JSON.stringify(data);
+      // return JSON.stringify(data); // post请求协议如使用 "Content-Type": "application/json; charset=UTF-8", 请用这个序列化
       return Qs.stringify(data);
     }
   ],
@@ -33,6 +31,7 @@ axios.interceptors.request.use(
     // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
     // const token = store.state.token;
     // token && (config.headers.Authorization = token);
+    console.log(config);
     if (localStorage.getItem("Authorization")) {
       config.headers.Authorization = localStorage.getItem("Authorization");
     }
@@ -60,6 +59,7 @@ axios.interceptors.request.use(
           }
         : {
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+            // "Content-Type": "application/json; charset=UTF-8",
             "x-csrf-token": getCookie("csrfToken")
           },
       config.headers

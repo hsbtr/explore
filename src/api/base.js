@@ -1,10 +1,14 @@
 import http from "../http";
 
+/**
+ * 接口前缀
+ * */
+const PR = "/base";
 export default {
   csrfToken() {
-    return http.get("/", { data: { text: "三火" } });
+    return http.get(PR + "/", { data: { text: "三火" } });
   },
-  sigIn(data) {
-    return http.post("/sigin", { data: data });
+  getTabBar(data) {
+    return http.get(PR + "/tabBar", { data: data });
   }
 };
