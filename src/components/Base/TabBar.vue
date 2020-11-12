@@ -1,6 +1,9 @@
 <template>
   <div class="tab-bar">
-    <router-link to="" @click="itemAction()"></router-link>
+    <router-link to="" @click.native="itemAction()">
+      <img src="" alt="" />
+      <span></span>
+    </router-link>
   </div>
 </template>
 
