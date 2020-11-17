@@ -5,11 +5,11 @@ import router from "./router";
 import store from "./store";
 import VueAxios from "vue-axios";
 import api from "./api";
-// import http from "./http";
-// import axios from "axios";
+import bus from "./bus";
+import "./css/base.scss";
 
 Vue.use(VueAxios, api);
-// Vue.prototype.$api = api;
+Vue.use(bus);
 
 Vue.config.productionTip = false;
 

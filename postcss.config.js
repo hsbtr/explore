@@ -17,8 +17,8 @@ module.exports = {
       landscapeUnit: "vw", // (String) 横屏时使用的单位
       landscapeWidth: 568 // (Number) 横屏时使用的视口宽度
     },
-    "postcss-import": {},
-    "postcss-url": {},
+    // "postcss-import": {},
+    // "postcss-url": {},
     "postcss-aspect-ratio-mini": {},
     "postcss-write-svg": {
       utf8: false

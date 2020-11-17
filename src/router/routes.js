@@ -1,5 +1,5 @@
-import Home from "@/views/Home";
-import Error from "@/views/Error";
+import Home from "../views/Home";
+import Error from "../views/Error";
 
 export default [
   {

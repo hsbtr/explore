@@ -1,5 +1,5 @@
-import base from "@/api/base";
-import user from "@/api/user";
+import base from "./base";
+import user from "./user";
 
 export default {
   base,
