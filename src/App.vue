@@ -40,7 +40,7 @@ export default {
     TabBar
   },
   beforeCreate() {
-    // this.$http.base.csrfToken();
+    this.$http.base.csrfToken();
   },
   created() {
     // this.addSig();
