@@ -1,7 +1,7 @@
 <template>
   <div class="tab-bar">
     <router-link
-      to=""
+      :to="val.path"
       class="item"
       v-for="(val, index) in tabBarList"
       :key="val.id"
