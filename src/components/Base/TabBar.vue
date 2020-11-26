@@ -1,7 +1,7 @@
 <template>
   <div class="tab-bar">
     <router-link
-      :to="val.path"
+      :to="val.src"
       class="item"
       v-for="(val, index) in tabBarList"
       :key="val.id"
@@ -38,7 +38,16 @@ export default {
         .then(res => {
           console.log(res);
           if (res.result && res.state === 200) {
-            _this.tabBarList = res.result;
+            let data = res.result;
+            for (let i = 0; i < data.length; i++) {
+              if (data[i].name) {
+                data[i]["src"] =
+                  "/" +
+                  data[i].name.slice(0, 1).toUpperCase() +
+                  data[i].name.slice(1);
+              }
+            }
+            _this.tabBarList = data;
           }
         })
         .catch();
