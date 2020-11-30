@@ -21,11 +21,26 @@
 <script>
 export default {
   name: "TabBar",
+  props: {
+    tabKey: {
+      type: Number,
+      required: true,
+      validator: function(value) {
+        return [0, 1, 2, 3].indexOf(value) !== -1;
+      }
+    }
+  },
   data() {
     return {
       tabBarList: [],
       actionItem: 0
     };
+  },
+  computed: {},
+  watch: {
+    tabKey(val) {
+      this.actionItem = val;
+    }
   },
   methods: {
     /**
@@ -59,8 +74,6 @@ export default {
       this.actionItem = index;
     }
   },
-  computed: {},
-  watch: {},
   beforeCreate() {},
   created() {
     this.getTabBarLst();
@@ -88,9 +101,13 @@ export default {
     align-items: center;
     font-size: 16px;
     color: #8a8a8a;
-    padding: 5px 0;
+    padding: 10px 0;
     .select-text {
       color: #000000;
+    }
+    img {
+      width: 18px;
+      height: 18px;
     }
   }
 }
