@@ -1,5 +1,11 @@
 module.exports = {
   publicPath: "/explore/",
+  chainWebpack: config => {
+    config.resolve.alias.set(
+      "/images/",
+      "https://download.yxybb.com/transport/JDStudy/images/"
+    );
+  },
   devServer: {
     host: "localhost",
     port: 8081,

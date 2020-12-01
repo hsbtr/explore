@@ -4,7 +4,14 @@
 
 <script>
 export default {
-  name: "Home"
+  name: "Home",
+  data() {
+    return {};
+  },
+  computed: {},
+  watch: {},
+  methods: {},
+  created() {}
 };
 </script>
 
