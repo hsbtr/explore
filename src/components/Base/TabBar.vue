@@ -57,7 +57,6 @@ export default {
             for (let i = 0; i < data.length; i++) {
               if (data[i].name) {
                 data[i]["src"] =
-                  "/" +
                   data[i].name.slice(0, 1).toUpperCase() +
                   data[i].name.slice(1);
               }
