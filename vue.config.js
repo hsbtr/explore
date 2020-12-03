@@ -1,10 +1,28 @@
 module.exports = {
   publicPath: "/explore/",
-  chainWebpack: config => {
-    config.resolve.alias.set(
-      "/images/",
-      "https://download.yxybb.com/transport/JDStudy/images/"
-    );
+  chainWebpack: config => {},
+  pwa: {
+    iconPaths: {
+      favicon32: "img/icons/favicon-32x32.png",
+      favicon16: "img/icons/favicon-16x16.png",
+      appleTouchIcon: "img/icons/favicon-180x180.png",
+      maskIcon: "img/icons/favicon.svg",
+      msTileImage: "img/icons/favicon-144x144.png"
+    },
+    manifestOptions: {
+      icons: [
+        {
+          src: "img/icons/miaow-192x192.png",
+          sizes: "192x192",
+          type: "image/png"
+        },
+        {
+          src: "img/icons/miaow-512x512.png",
+          sizes: "512x512",
+          type: "image/png"
+        }
+      ]
+    }
   },
   devServer: {
     host: "localhost",
