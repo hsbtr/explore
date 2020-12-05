@@ -1,6 +1,41 @@
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin"); // 去掉注释
+const CompressionWebpackPlugin = require("compression-webpack-plugin"); // 开启压缩
+
+const isProduction = process.env.NODE_ENV === "production";
+
 module.exports = {
   publicPath: "/explore/",
   chainWebpack: config => {},
+  configureWebpack: config => {
+    const plugins = [];
+    if (isProduction) {
+      plugins.push(
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            output: {
+              comments: false // 去掉注释
+            },
+            warnings: false,
+            compress: {
+              drop_console: true,
+              drop_debugger: false,
+              pure_funcs: ["console.log"] //移除console
+            }
+          }
+        })
+      );
+    }
+    plugins.push(
+      new CompressionWebpackPlugin({
+        algorithm: "gzip",
+        test: /\.(js|css)$/, // 匹配文件名
+        threshold: 10000, // 对超过10k的数据压缩
+        deleteOriginalAssets: false, // 不删除源文件
+        minRatio: 0.8 // 压缩比
+      })
+    );
+    return { plugins };
+  },
   pwa: {
     iconPaths: {
       favicon32: "img/icons/favicon-32x32.png",
