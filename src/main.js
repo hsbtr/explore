@@ -9,6 +9,7 @@ import bus from "./bus";
 import { Notify } from "vant";
 import "./css/base.scss";
 import "vant/lib/index.css";
+import "nprogress/nprogress.css";
 
 Vue.use(VueAxios, api);
 Vue.use(bus);
