@@ -1,6 +1,5 @@
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin"); // 去掉注释
 const CompressionWebpackPlugin = require("compression-webpack-plugin"); // 开启压缩
-const webpack = require("webpack");
 
 const isProduction = process.env.NODE_ENV === "production";
 
