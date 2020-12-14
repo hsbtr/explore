@@ -30,6 +30,9 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from) => {
   NProgress.done();
+  if (from.meta.title) {
+    document.title = from.meta.title;
+  }
 });
 
 export default router;
