@@ -8,4 +8,5 @@ export const getCookie = name => {
     const temp = str[i].split("=");
     if (temp[0] === name) return unescape(temp[1]);
   }
+  return "";
 };

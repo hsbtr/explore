@@ -48,7 +48,7 @@ export default {
      * */
     getTabBarLst() {
       let _this = this;
-      this.$http.base
+      this.$api.base
         .getTabBar({ is: 1 })
         .then(res => {
           console.log(res);

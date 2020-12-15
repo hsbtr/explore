@@ -26,14 +26,15 @@ export default {
   },
   methods: {
     addSig() {
-      this.$http.user.sigIn({ name: "三火" });
+      this.$api.base.sigIn({ name: "三火" });
     }
   },
   components: {
     TabBar
   },
   beforeCreate() {
-    this.$http.base.csrfToken();
+    // this.$api.base.csrfToken();
+    console.log(this.$api);
   },
   created() {
     // this.addSig();
