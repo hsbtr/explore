@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import base from "@/api/base";
 export default {
   name: "TabBar",
   props: {
@@ -33,7 +34,8 @@ export default {
   data() {
     return {
       tabBarList: [],
-      actionItem: 0
+      actionItem: 0,
+      isAsk: false
     };
   },
   computed: {},
@@ -48,7 +50,11 @@ export default {
      * */
     getTabBarLst() {
       let _this = this;
-      this.$api.base
+      let tabBar = localStorage.getItem("tabBarList");
+      if (_this.isAsk) {
+        return;
+      }
+      base
         .getTabBar({ is: 1 })
         .then(res => {
           console.log(res);
@@ -63,9 +69,16 @@ export default {
               }
             }
             _this.tabBarList = data;
+            localStorage.setItem("tabBarList", JSON.stringify(data));
+            _this.isAsk = true;
+          } else {
+            _this.tabBarList = JSON.parse(tabBar);
           }
         })
-        .catch();
+        .catch(err => {
+          console.log(err);
+          _this.tabBarList = JSON.parse(tabBar);
+        });
     },
     /**
      * tab-item 选中

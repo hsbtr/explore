@@ -5,6 +5,7 @@
   </div>
 </template>
 <script>
+import base from "@/api/base";
 import TabBar from "@/components/Base/TabBar";
 
 export default {
@@ -26,7 +27,7 @@ export default {
   },
   methods: {
     addSig() {
-      this.$api.base.sigIn({ name: "三火" });
+      base.sigIn({ name: "三火" });
     }
   },
   components: {
@@ -34,7 +35,6 @@ export default {
   },
   beforeCreate() {
     // this.$api.base.csrfToken();
-    console.log(this.$api);
   },
   created() {
     // this.addSig();
