@@ -1,4 +1,4 @@
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin"); // 去掉注释
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin"); // 去掉注释 terser-webpack-plugin
 const CompressionWebpackPlugin = require("compression-webpack-plugin"); // 开启压缩
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -8,23 +8,7 @@ module.exports = {
   chainWebpack: config => {},
   configureWebpack: config => {
     const plugins = [];
-    if (isProduction) {
-      plugins.push(
-        new UglifyJsPlugin({
-          uglifyOptions: {
-            output: {
-              comments: false // 去掉注释
-            },
-            warnings: false,
-            compress: {
-              drop_console: true,
-              drop_debugger: false,
-              pure_funcs: ["console.log"] //移除console
-            }
-          }
-        })
-      );
-    }
+    // if (isProduction) {}
     plugins.push(
       new CompressionWebpackPlugin({
         algorithm: "gzip",

@@ -20,6 +20,8 @@
 
 <script>
 import base from "@/api/base";
+import { localStorageSet, localStorageGet } from "@/libs/utils";
+import { v4 as uuidv4 } from "uuid";
 export default {
   name: "TabBar",
   props: {
@@ -50,7 +52,45 @@ export default {
      * */
     getTabBarLst() {
       let _this = this;
-      let tabBar = localStorage.getItem("tabBarList");
+      let tabBar = localStorageGet("tabBarList");
+      let tabList = [
+        {
+          id: uuidv4().split("-"),
+          name: "home",
+          text: "首页",
+          sort: 1,
+          src: "/Home",
+          defaultIcon: require("../../img/home.png"),
+          selectIcon: require("../../img/home1.png")
+        },
+        {
+          id: uuidv4().split("-"),
+          name: "find",
+          text: "发现",
+          sort: 2,
+          src: "/Find",
+          defaultIcon: require("../../img/find.png"),
+          selectIcon: require("../../img/find1.png")
+        },
+        {
+          id: uuidv4().split("-"),
+          name: "mess",
+          text: "消息",
+          sort: 3,
+          src: "/Mess",
+          defaultIcon: require("../../img/mess.png"),
+          selectIcon: require("../../img/mess1.png")
+        },
+        {
+          id: uuidv4().split("-"),
+          name: "my",
+          text: "我的",
+          sort: 4,
+          src: "/My",
+          defaultIcon: require("../../img/my.png"),
+          selectIcon: require("../../img/my1.png")
+        }
+      ];
       if (_this.isAsk) {
         return;
       }
@@ -69,15 +109,17 @@ export default {
               }
             }
             _this.tabBarList = data;
-            localStorage.setItem("tabBarList", JSON.stringify(data));
+            localStorageSet("tabBarList", data);
             _this.isAsk = true;
           } else {
-            _this.tabBarList = JSON.parse(tabBar);
+            if (tabBar.length === 0) tabBar = tabList;
+            _this.tabBarList = tabBar;
           }
         })
         .catch(err => {
           console.log(err);
-          _this.tabBarList = JSON.parse(tabBar);
+          if (tabBar.length === 0) tabBar = tabList;
+          _this.tabBarList = tabBar;
         });
     },
     /**
