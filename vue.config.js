@@ -1,14 +1,30 @@
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin"); // 去掉注释 terser-webpack-plugin
+const TerserPlugin = require("terser-webpack-plugin"); // 去掉注释
 const CompressionWebpackPlugin = require("compression-webpack-plugin"); // 开启压缩
 
 const isProduction = process.env.NODE_ENV === "production";
 
 module.exports = {
+  outputDir: "dist/explore",
   publicPath: "/explore/",
   chainWebpack: config => {},
   configureWebpack: config => {
     const plugins = [];
-    // if (isProduction) {}
+    if (isProduction) {
+      config.optimization.minimizer = [
+        new TerserPlugin({
+          terserOptions: {
+            ecma: undefined,
+            warnings: false,
+            parse: {},
+            compress: {
+              drop_console: true,
+              drop_debugger: false,
+              pure_funcs: ['console.log'], // 移除console
+            }
+          }
+        })
+      ];
+    }
     plugins.push(
       new CompressionWebpackPlugin({
         algorithm: "gzip",
