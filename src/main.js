@@ -6,14 +6,12 @@ import store from "./store";
 import VueAxios from "vue-axios";
 import http from "./http";
 import bus from "./bus";
-import { Notify } from "vant";
-import "./css/base.scss";
+import "./css/base.css";
 import "vant/lib/index.css";
 import "nprogress/nprogress.css";
 
 Vue.use(VueAxios, http);
 Vue.use(bus);
-Vue.use(Notify);
 
 Vue.config.productionTip = false;
 

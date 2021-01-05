@@ -63,7 +63,6 @@ axios.interceptors.request.use(
           },
       config.headers
     );
-    console.log(config);
     return config;
   },
   error => {

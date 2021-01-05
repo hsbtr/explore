@@ -6,6 +6,7 @@ const isProduction = process.env.NODE_ENV === "production";
 module.exports = {
   outputDir: "dist/explore",
   publicPath: "/explore/",
+  productionSourceMap: false,
   chainWebpack: config => {},
   configureWebpack: config => {
     const plugins = [];
@@ -19,7 +20,7 @@ module.exports = {
             compress: {
               drop_console: true,
               drop_debugger: false,
-              pure_funcs: ['console.log'], // 移除console
+              pure_funcs: ["console.log"] // 移除console
             }
           }
         })
