@@ -8,6 +8,11 @@ module.exports = {
   publicPath: "/explore/",
   productionSourceMap: false,
   chainWebpack: config => {
+    // 开启打包日志
+    // config
+    //   .plugin("webpack-bundle-analyzer")
+    //   .use(require("webpack-bundle-analyzer").BundleAnalyzerPlugin);
+    // 压缩图片
     config.module
       .rule("images")
       .test(/\.(gif|png|jpe?g|svg)$/i)
@@ -19,6 +24,7 @@ module.exports = {
   configureWebpack: config => {
     const plugins = [];
     if (isProduction) {
+      // 处理生产环境的conlose
       config.optimization.minimizer = [
         new TerserPlugin({
           terserOptions: {
@@ -33,6 +39,18 @@ module.exports = {
           }
         })
       ];
+      // 取消webpack警告的性能提示
+      // config.performance = {
+      //   hints: "warning",
+      //   //入口起点的最大体积
+      //   maxEntrypointSize: 1000 * 500,
+      //   //生成文件的最大体积
+      //   maxAssetSize: 1000 * 1000,
+      //   //只给出 js 文件的性能提示
+      //   assetFilter: function(assetFilename) {
+      //     return assetFilename.endsWith(".js");
+      //   }
+      // };
     }
     plugins.push(
       new CompressionWebpackPlugin({
