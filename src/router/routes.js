@@ -1,15 +1,11 @@
 import Home from "@/views/Home";
-import Error from "@/views/Error";
-
-const Find = () => import(/* webpackChunkName: "find" */ "../views/Find.vue");
-const Mess = () => import(/* webpackChunkName: "mess" */ "../views/Mess.vue");
-const My = () => import(/* webpackChunkName: "my" */ "../views/My.vue");
+// import Error from "@/views/Error";
 
 export default [
   {
     path: "*",
     name: "Error",
-    component: Error
+    component: () => import(/* webpackChunkName: "common" */ "../views/Error")
   },
   {
     path: "/",
@@ -32,7 +28,7 @@ export default [
       types: "TabBar",
       keys: 1
     },
-    component: Find
+    component: () => import(/* webpackChunkName: "find" */ "../views/Find.vue")
   },
   {
     path: "/Mess",
@@ -41,7 +37,7 @@ export default [
       types: "TabBar",
       keys: 2
     },
-    component: Mess
+    component: () => import(/* webpackChunkName: "mess" */ "../views/Mess.vue")
   },
   {
     path: "/My",
@@ -50,6 +46,6 @@ export default [
       types: "TabBar",
       keys: 3
     },
-    component: My
+    component: import(/* webpackChunkName: "my" */ "../views/My.vue")
   }
 ];

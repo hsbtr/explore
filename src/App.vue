@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import base from "@/api/base";
+import { sigIn } from "./api/user";
 import TabBar from "@/components/Base/TabBar";
 
 export default {
@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     addSig() {
-      base.sigIn({ name: "三火" });
+      sigIn({ name: "三火" });
     }
   },
   components: {

@@ -19,9 +19,8 @@
 </template>
 
 <script>
-import base from "@/api/base";
-import { localStorageSet, localStorageGet } from "@/libs/utils";
-import { v4 as uuidv4 } from "uuid";
+import { getTabBar } from "../../api/base";
+import { localStorageSet, localStorageGet, uuid } from "../../libs/utils";
 export default {
   name: "TabBar",
   props: {
@@ -55,47 +54,46 @@ export default {
       let tabBar = localStorageGet("tabBarList");
       let tabList = [
         {
-          id: uuidv4().split("-"),
+          id: uuid(),
           name: "home",
           text: "首页",
           sort: 1,
           src: "/Home",
-          defaultIcon: require("../../img/home.png"),
-          selectIcon: require("../../img/home1.png")
+          defaultIcon: require("../../assets/img/home.png"),
+          selectIcon: require("../../assets/img/home1.png")
         },
         {
-          id: uuidv4().split("-"),
+          id: uuid(),
           name: "find",
           text: "发现",
           sort: 2,
           src: "/Find",
-          defaultIcon: require("../../img/find.png"),
-          selectIcon: require("../../img/find1.png")
+          defaultIcon: require("../../assets/img/find.png"),
+          selectIcon: require("../../assets/img/find1.png")
         },
         {
-          id: uuidv4().split("-"),
+          id: uuid(),
           name: "mess",
           text: "消息",
           sort: 3,
           src: "/Mess",
-          defaultIcon: require("../../img/mess.png"),
-          selectIcon: require("../../img/mess1.png")
+          defaultIcon: require("../../assets/img/mess.png"),
+          selectIcon: require("../../assets/img/mess1.png")
         },
         {
-          id: uuidv4().split("-"),
+          id: uuid(),
           name: "my",
           text: "我的",
           sort: 4,
           src: "/My",
-          defaultIcon: require("../../img/my.png"),
-          selectIcon: require("../../img/my1.png")
+          defaultIcon: require("../../assets/img/my.png"),
+          selectIcon: require("../../assets/img/my1.png")
         }
       ];
       if (_this.isAsk) {
         return;
       }
-      base
-        .getTabBar({ is: 1 })
+      getTabBar({ is: 1 })
         .then(res => {
           console.log(res);
           if (res.result && res.state === 200) {
@@ -112,13 +110,13 @@ export default {
             localStorageSet("tabBarList", data);
             _this.isAsk = true;
           } else {
-            if (tabBar.length === 0) tabBar = tabList;
+            if (!tabBar) tabBar = tabList;
             _this.tabBarList = tabBar;
           }
         })
         .catch(err => {
           console.log(err);
-          if (tabBar.length === 0) tabBar = tabList;
+          if (!tabBar) tabBar = tabList;
           _this.tabBarList = tabBar;
         });
     },
