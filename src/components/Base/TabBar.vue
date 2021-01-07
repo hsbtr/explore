@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import { getTabBar } from "../../api/base";
-import { localStorageSet, localStorageGet, uuid } from "../../libs/utils";
+import { getTabBar } from "@/api/base";
+import { localStorageSet, localStorageGet, uuid } from "@/libs/utils";
 export default {
   name: "TabBar",
   props: {
