@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view />
-    <tab-bar :tab-key="tabBarKey"></tab-bar>
+    <tab-bar :tab-key="tabBarKey" v-show="tabBarShow"></tab-bar>
   </div>
 </template>
 <script>
@@ -12,7 +12,8 @@ export default {
   name: "App",
   data() {
     return {
-      tabBarKey: 0
+      tabBarKey: 0,
+      tabBarShow: true
     };
   },
   computed: {},
@@ -21,7 +22,10 @@ export default {
       console.log(from);
       if (to.meta.types === "TabBar") {
         console.log(to);
+        this.tabBarShow = true;
         this.tabBarKey = to.meta.keys;
+      } else {
+        this.tabBarShow = false;
       }
     }
   },

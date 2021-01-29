@@ -43,6 +43,11 @@ export default [
     children: [
       {
         path: "SessionList",
+        name: "SessionList",
+        meta: {
+          types: "TabBar",
+          keys: 2
+        },
         component: () =>
           import(
             /* webpackChunkName: "mess" */ "../components/Mess/SessionList.vue"
@@ -50,6 +55,8 @@ export default [
       },
       {
         path: "Dynamic",
+        name: "Dynamic",
+        meta: {},
         component: () =>
           import(
             /* webpackChunkName: "mess" */ "../components/Mess/Dynamic.vue"

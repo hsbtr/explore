@@ -1,6 +1,6 @@
 <template>
   <div class="call">
-    <video-omari></video-omari>
+    <video-omari v-show="false"></video-omari>
     <video-oneself></video-oneself>
     <div class="but-footer">
       <button class="foot-item"></button>
@@ -37,6 +37,8 @@ export default {
   overflow: hidden;
   position: relative;
   .but-footer {
+    width: 100%;
+    padding: 0 60px;
     display: flex;
     justify-content: space-between;
     position: absolute;

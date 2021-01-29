@@ -1,6 +1,6 @@
 <template>
   <div class="oneself">
-    <video autoplay playsinline :src="srcData" ref="local-video"></video>
+    <video autoplay playsinline muted="muted" :src="srcData" ref="localVideo"></video>
   </div>
 </template>
 
@@ -27,23 +27,22 @@ export default {
       }
     },
     success(stream) {
-      const videos = this.$refs.videos;
-      this.$nextTick(function() {
-        if ("srcObject" in videos) {
-          try {
-            videos.srcObject = stream;
-          } catch (e) {
-            if (e.name !== "TypeError") throw e;
-            this.srcData = URL.createObjectURL(stream);
-          }
-        } else {
-          const compat = window.URL || window.webkitURL;
-          this.srcData = compat.createObjectURL(stream);
+      const videos = this.$refs.localVideo;
+      console.log(stream);
+      if ("srcObject" in videos) {
+        try {
+          videos.srcObject = stream;
+        } catch (e) {
+          if (e.name !== "TypeError") throw e;
+          this.srcData = URL.createObjectURL(stream);
         }
-        videos.onloadedmetadata = function() {
-          videos.play();
-        };
-      });
+      } else {
+        const compat = window.URL || window.webkitURL;
+        this.srcData = compat.createObjectURL(stream);
+      }
+      videos.onloadedmetadata = function() {
+        videos.play();
+      };
     },
     error(err) {
       this.Toast.fail("设备调用摄像头失败！");
@@ -60,10 +59,12 @@ export default {
 
 <style scoped lang="scss">
 .oneself {
+  height: 100%;
   overflow: hidden;
   video {
     width: 100%;
     height: 100%;
+    object-fit: cover;
   }
 }
 </style>
