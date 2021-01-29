@@ -13,4 +13,31 @@ a {
 ul {
   list-style-type: none; }
 
+button {
+  border: none;
+  outline: none; }
+
+.flex {
+  display: flex; }
+
+.flex-x {
+  display: flex;
+  justify-content: space-between; }
+
+.flex-x-start {
+  display: flex;
+  justify-content: flex-start; }
+
+.flex-x-cen {
+  display: flex;
+  justify-content: center; }
+
+.flex-x-end {
+  display: flex;
+  justify-content: flex-end; }
+
+.flex-y {
+  display: flex;
+  flex-direction: column; }
+
 /*# sourceMappingURL=base.css.map */

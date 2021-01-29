@@ -1,4 +1,5 @@
 import Home from "@/views/Home";
+// import * as path from "path";
 // import Error from "@/views/Error";
 
 export default [
@@ -37,7 +38,24 @@ export default [
       types: "TabBar",
       keys: 2
     },
-    component: () => import(/* webpackChunkName: "mess" */ "../views/Mess.vue")
+    component: () => import(/* webpackChunkName: "mess" */ "../views/Mess.vue"),
+    redirect: "/Mess/SessionList",
+    children: [
+      {
+        path: "SessionList",
+        component: () =>
+          import(
+            /* webpackChunkName: "mess" */ "../components/Mess/SessionList.vue"
+          )
+      },
+      {
+        path: "Dynamic",
+        component: () =>
+          import(
+            /* webpackChunkName: "mess" */ "../components/Mess/Dynamic.vue"
+          )
+      }
+    ]
   },
   {
     path: "/My",
@@ -46,6 +64,19 @@ export default [
       types: "TabBar",
       keys: 3
     },
-    component: import(/* webpackChunkName: "my" */ "../views/My.vue")
+    component: () => import(/* webpackChunkName: "my" */ "../views/My.vue")
+  },
+  {
+    path: "/ChatRoom",
+    name: "ChatRoom",
+    meta: {},
+    component: () =>
+      import(/* webpackChunkName: "chatroom" */ "../views/ChatRoom.vue")
+  },
+  {
+    path: "/Call",
+    name: "Call",
+    meta: {},
+    component: () => import(/* webpackChunkName: "Call" */ "../views/Call.vue")
   }
 ];
