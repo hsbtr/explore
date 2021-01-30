@@ -72,7 +72,7 @@ export default {
   overflow: hidden;
   background: #ffffff;
   .head-func {
-    padding: 10px 15px;
+    padding: 20px 15px;
     overflow: hidden;
     .func-bar {
       width: 100px;
@@ -89,7 +89,6 @@ export default {
         font-size: 18px;
         color: #000000;
       }
-
     }
   }
   .main-list {

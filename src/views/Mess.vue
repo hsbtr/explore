@@ -1,6 +1,6 @@
 <template>
   <div class="mess">
-    <div class="head-nav flex-x">
+    <div class="head-nav flex-x flex-align-cen">
       <div class="nav-bars flex-x-cen">
         <router-link to="/Mess/Dynamic" active-class="active-class"
           >动态</router-link
@@ -35,12 +35,17 @@ export default {
   height: 100%;
   background: rgba(211, 211, 211, 0.3);
   .head-nav {
-    padding: 10px 10px 10px 40px;
+    position: sticky;
+    top: 0;
+    padding: 20px 10px 20px 40px;
+    box-shadow: 0 2px 5px rgba(211, 211, 211, 0.8);
     background: #ffffff;
     .nav-bars {
       flex: 2;
+      height: 50px;
       a {
-        padding: 10px;
+        line-height: 50px;
+        padding: 0 10px;
         font-size: 26px;
         color: #808080;
       }
