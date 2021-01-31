@@ -7,15 +7,19 @@
     </div>
     <div class="chat-main">
       <ul class="main-scroll">
-        <li class="mess-item" v-for="(val, index) in chatRecord" :key="val.id">
-          <div class="item-lift">
+        <li
+          :class="setClassName(val)"
+          v-for="(val, index) in chatRecord"
+          :key="val.id"
+        >
+          <div class="item-left flex-x-start" v-if="!val.is_self">
             <router-link to="">
               <img src="" alt="" />
             </router-link>
-            <span @touchstart.stop.prevent="">{{ val.message }}</span>
+            <span @touchstart.stop.prevent="index">{{ val.message }}</span>
           </div>
-          <div class="item-right">
-            <span>{{ val.message }}</span>
+          <div class="item-right flex-x-end" v-else>
+            <span @touchstart.stop.prevent="index">{{ val.message }}</span>
             <router-link to="">
               <img src="" alt="" />
             </router-link>
@@ -37,21 +41,25 @@ export default {
         {
           id: uuid(),
           message: "三艘",
+          is_self: true,
           create_time: "2020 - 12 - 12 12:12:50"
         },
         {
           id: uuid(),
           message: "三艘",
+          is_self: false,
           create_time: "2020 - 12 - 12 12:12:50"
         },
         {
           id: uuid(),
           message: "三艘",
+          is_self: true,
           create_time: "2020 - 12 - 12 12:12:50"
         },
         {
           id: uuid(),
           message: "三艘",
+          is_self: true,
           create_time: "2020 - 12 - 12 12:12:50"
         },
         {
@@ -62,9 +70,17 @@ export default {
       ]
     };
   },
-  methods: {},
+  methods: {
+    showFunc() {}
+  },
   watch: {},
-  computed: {},
+  computed: {
+    setClassName() {
+      return function(val) {
+        return ["mess-item", val.is_self ? "flex-x-end" : "flex-x-start"];
+      };
+    }
+  },
   created() {},
   mounted() {}
 };
@@ -89,6 +105,33 @@ export default {
       color: #000000;
       font-size: 26px;
       font-weight: 500;
+    }
+  }
+  .chat-main {
+    .main-scroll {
+      padding: 20px 0;
+      .mess-item {
+        padding: 0 10px;
+        .item-left,
+        .item-right {
+          width: 85%;
+          a {
+            width: 60px;
+            height: 60px;
+            overflow: hidden;
+            margin: 0 10px;
+            border-radius: 50%;
+          }
+          img {
+            width: 100%;
+            height: 100%;
+          }
+          span {
+            font-size: 16px;
+            color: #000000;
+          }
+        }
+      }
     }
   }
 }

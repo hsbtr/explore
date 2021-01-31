@@ -1,6 +1,12 @@
 <template>
   <div class="oneself">
-    <video autoplay playsinline muted="muted" :src="srcData" ref="localVideo"></video>
+    <video
+      autoplay
+      playsinline
+      muted="muted"
+      :src="srcData"
+      ref="localVideo"
+    ></video>
   </div>
 </template>
 
