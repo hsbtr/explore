@@ -1,14 +1,17 @@
 <template>
   <div class="chat-room flex-y">
     <div class="head-nav flex-x flex-align-cen">
-      <div class="nav-back">
+      <div class="nav-back flex flex-align-cen">
         <button @click="goBack"></button>
-        <div class="mess-num-bubble flex-x-cen">
+        <div class="mess-num-bubble flex-x-cen flex-align-cen">
           <span>12</span>
         </div>
       </div>
       <span class="title">狗子</span>
-      <router-link to=""></router-link>
+      <div class="menu-box flex flex-align-cen">
+        <router-link to=""></router-link>
+        <router-link to=""></router-link>
+      </div>
     </div>
     <div class="chat-main">
       <ul class="main-scroll">
@@ -48,10 +51,21 @@
     <div class="footer-func">
       <div class="chat-input flex">
         <label class="input-box flex">
-          <textarea v-model="current_text"></textarea>
-          <span>{{ current_text }}</span>
+          <textarea
+            :rows="textarea_rows"
+            v-model="current_text"
+            ref="textarea"
+          ></textarea>
         </label>
-        <button>发送</button>
+        <button :class="{ 'change-but-bg': isVal }">发送</button>
+      </div>
+      <div class="action-func">
+        <router-link to=""></router-link>
+        <router-link to=""></router-link>
+        <router-link to=""></router-link>
+        <router-link to=""></router-link>
+        <router-link to=""></router-link>
+        <router-link to=""></router-link>
       </div>
     </div>
   </div>
@@ -64,8 +78,10 @@ export default {
   name: "ChatRoom",
   data() {
     return {
+      isVal: false,
       textarea_rows: 1,
       current_text: "",
+      textarea_ht: 0,
       chatRecord: [
         {
           id: uuid(),
@@ -108,8 +124,22 @@ export default {
     showFunc() {}
   },
   watch: {
+    // 监听输入框中的值变化 获取当前内容的高度 同时给按钮说明当前有值
     current_text(val) {
-      console.log(val.split("//r?/n/").length);
+      if (val) {
+        this.isVal = true;
+        this.textarea_ht = this.$refs.textarea.scrollHeight;
+      } else {
+        this.isVal = false;
+      }
+    },
+    // 判断前后两次的内容高度变化 去除旧值为0的情况
+    textarea_ht(val, oldVal) {
+      if (oldVal && val !== oldVal && val > oldVal && this.textarea_rows <= 6) {
+        this.textarea_rows++;
+      } else if (val < oldVal && this.textarea_rows > 1) {
+        this.textarea_rows--;
+      }
     }
   },
   computed: {
@@ -137,34 +167,26 @@ export default {
     box-shadow: 0 1px 5px rgba(128, 128, 128, 0.4);
     background: #ffffff;
     .nav-back {
-      width: 60px;
+      width: 120px;
       height: 60px;
-      position: relative;
       button {
-        width: 100%;
+        width: 60px;
         height: 100%;
       }
       .mess-num-bubble {
         width: 35px;
         height: 35px;
-        position: absolute;
-        top: 10px;
-        left: 61px;
         overflow: hidden;
         border-radius: 50%;
         background: #ff0000;
         span {
           flex: 1;
           text-align: center;
-          line-height: 40px;
+          line-height: 35px;
           font-size: 8px;
           color: #ffffff;
         }
       }
-    }
-    a {
-      width: 60px;
-      height: 60px;
     }
     .title {
       flex: 1;
@@ -174,6 +196,14 @@ export default {
       color: #000000;
       font-size: 26px;
       font-weight: 500;
+    }
+    .menu-box {
+      width: 120px;
+      height: 60px;
+      a {
+        width: 60px;
+        height: 60px;
+      }
     }
   }
   .chat-main {
@@ -235,32 +265,18 @@ export default {
       overflow: hidden;
       .input-box {
         flex: 1;
-        min-height: 60px;
         max-height: 215px;
         overflow: hidden;
         border-radius: 20px;
-        position: relative;
         textarea {
           width: 100%;
           height: 100%;
-          padding: 15px 10px;
-          position: absolute;
-          top: 0;
-          left: 0;
+          padding: 12px 10px;
           border: none;
           outline: none;
           z-index: 99;
           border-radius: 20px;
           background: #ffffff;
-          font: {
-            size: 16px;
-            weight: 400;
-          }
-        }
-        span {
-          z-index: 9;
-          opacity: 0;
-          color: #ffffff;
           font: {
             size: 16px;
             weight: 400;
@@ -273,7 +289,11 @@ export default {
         margin-left: 10px;
         font-size: 14px;
         color: #ffffff;
-        border-radius: 20px;
+        border-radius: 10px;
+        background: #808080;
+      }
+      .change-but-bg {
+        background: #00bfff;
       }
     }
   }
