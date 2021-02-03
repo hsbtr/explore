@@ -8,9 +8,9 @@
         </div>
       </div>
       <span class="title">狗子</span>
-      <div class="menu-box flex flex-align-cen">
-        <router-link to=""></router-link>
-        <router-link to=""></router-link>
+      <div class="menu-box flex-x flex-align-cen">
+        <router-link to="" class="icon-phone"></router-link>
+        <router-link to="" class="icon-menu"></router-link>
       </div>
     </div>
     <div class="chat-main">
@@ -59,29 +59,31 @@
         </label>
         <button :class="{ 'change-but-bg': isVal }">发送</button>
       </div>
-      <div class="action-func">
-        <router-link to=""></router-link>
-        <router-link to=""></router-link>
-        <router-link to=""></router-link>
-        <router-link to=""></router-link>
-        <router-link to=""></router-link>
-        <router-link to=""></router-link>
+      <div class="action-func flex-x flex-align-cen">
+        <button
+          v-for="(val, index) in functionList"
+          :key="val.name"
+          :class="val.className"
+          @click="openElement(val, index)"
+        ></button>
       </div>
+      <more-func v-if="unfoldName === 'more'"></more-func>
     </div>
   </div>
 </template>
 
 <script>
 import { uuid } from "@/libs/utils";
+import MoreFunc from "@/components/ChatRoom/MoreFunc";
 
 export default {
   name: "ChatRoom",
   data() {
     return {
-      isVal: false,
-      textarea_rows: 1,
-      current_text: "",
-      textarea_ht: 0,
+      isVal: false, // 表明输入框是否有值
+      textarea_rows: 1, // 表示textarea最大可现实行数
+      current_text: "", // 当前输入框的内容
+      textarea_ht: 0, // 输入框的内容高度
       chatRecord: [
         {
           id: uuid(),
@@ -114,14 +116,46 @@ export default {
           is_self: false,
           create_time: "2020 - 12 - 12 12:12:50"
         }
-      ]
+      ], // 聊天记录列表
+      functionList: [
+        {
+          name: "voice",
+          className: "icon-v"
+        },
+        {
+          name: "picture",
+          className: "icon-p"
+        },
+        {
+          name: "camera",
+          className: "icon-c"
+        },
+        {
+          name: "action",
+          className: "icon-a"
+        },
+        {
+          name: "face",
+          className: "icon-f"
+        },
+        {
+          name: "more",
+          className: "icon-m"
+        }
+      ], // 功能按钮列表
+      unfoldName: "" // 当前打开的组件名字
     };
   },
   methods: {
     goBack() {
       this.$router.back();
     },
-    showFunc() {}
+    showFunc() {},
+    openElement(val, key) {
+      if (val && key) {
+        this.unfoldName = val.name;
+      }
+    }
   },
   watch: {
     // 监听输入框中的值变化 获取当前内容的高度 同时给按钮说明当前有值
@@ -152,6 +186,9 @@ export default {
       };
     }
   },
+  components: {
+    MoreFunc
+  },
   created() {},
   mounted() {}
 };
@@ -172,6 +209,7 @@ export default {
       button {
         width: 60px;
         height: 100%;
+        background: url("../assets/img/icon-back.png") no-repeat 0 0 / 100% 100%;
       }
       .mess-num-bubble {
         width: 35px;
@@ -201,8 +239,14 @@ export default {
       width: 120px;
       height: 60px;
       a {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
+      }
+      .icon-phone {
+        background: url("../assets/img/icon-phone.png") no-repeat 0 0 /100% 100%;
+      }
+      .icon-menu {
+        background: url("../assets/img/icon-menu.png") no-repeat 0 0 /100% 100%;
       }
     }
   }
@@ -256,12 +300,13 @@ export default {
     }
   }
   .footer-func {
-    flex: auto;
+    //flex: auto;
+    padding: 0 15px 20px 15px;
     z-index: 99;
     box-shadow: 0 -1px 5px rgba(128, 128, 128, 0.4);
     background: #dcdcdc;
     .chat-input {
-      padding: 20px 15px;
+      padding: 20px 0;
       overflow: hidden;
       .input-box {
         flex: 1;
@@ -294,6 +339,34 @@ export default {
       }
       .change-but-bg {
         background: #00bfff;
+      }
+    }
+    .action-func {
+      height: 60px;
+      padding: 0 15px;
+      button {
+        width: 50px;
+        height: 50px;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+      }
+      .icon-v {
+        background-image: url("../assets/img/icon-voice.png");
+      }
+      .icon-p {
+        background-image: url("../assets/img/icon-picture.png");
+      }
+      .icon-c {
+        background-image: url("../assets/img/icon-camera.png");
+      }
+      .icon-a {
+        background-image: url("../assets/img/icon-action.png");
+      }
+      .icon-f {
+        background-image: url("../assets/img/icon-face.png");
+      }
+      .icon-m {
+        background-image: url("../assets/img/icon-more.png");
       }
     }
   }

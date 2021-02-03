@@ -39,19 +39,19 @@ export default {
       funcBar: [
         {
           keys: 1,
-          icon: require("../../assets/img/remark.png"),
+          icon: require("../../assets/img/icon-remark.png"),
           text: "评论",
           path: ""
         },
         {
           keys: 2,
-          icon: require("../../assets/img/enjoy.png"),
+          icon: require("../../assets/img/icon-enjoy.png"),
           text: "喜欢",
           path: ""
         },
         {
           keys: 3,
-          icon: require("../../assets/img/note.png"),
+          icon: require("../../assets/img/icon-note.png"),
           text: "通知",
           path: "/Call"
         }
