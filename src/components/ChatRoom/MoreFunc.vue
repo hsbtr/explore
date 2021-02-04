@@ -18,7 +18,7 @@ export default {
 
 <style scoped lang="scss">
 .more {
-  height: 500px;
+  height: 800px;
   overflow: hidden;
   background: deepskyblue;
 }

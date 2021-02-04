@@ -67,7 +67,7 @@
           @click="openElement(val, index)"
         ></button>
       </div>
-      <more-func v-if="unfoldName === 'more'"></more-func>
+      <more-func v-if="returnShow(functionList[unfoldKeys.key])"></more-func>
     </div>
   </div>
 </template>
@@ -124,26 +124,34 @@ export default {
         },
         {
           name: "picture",
-          className: "icon-p"
+          className: "icon-p",
+          isShow: false
         },
         {
           name: "camera",
-          className: "icon-c"
+          className: "icon-c",
+          isShow: false
         },
         {
           name: "action",
-          className: "icon-a"
+          className: "icon-a",
+          isShow: false
         },
         {
           name: "face",
-          className: "icon-f"
+          className: "icon-f",
+          isShow: false
         },
         {
           name: "more",
-          className: "icon-m"
+          className: "icon-m",
+          isShow: false
         }
       ], // 功能按钮列表
-      unfoldName: "" // 当前打开的组件名字
+      unfoldKeys: {
+        key: null,
+        name: ""
+      } // 组件集合
     };
   },
   methods: {
@@ -153,7 +161,25 @@ export default {
     showFunc() {},
     openElement(val, key) {
       if (val && key) {
-        this.unfoldName = val.name;
+        if (val.isShow) {
+          val.isShow = false;
+          this.unfoldKeys = {
+            key: null,
+            name: ""
+          };
+          return;
+        }
+        val.isShow = true;
+        this.unfoldKeys = {
+          key: key,
+          name: val.name
+        };
+      }
+    },
+    returnShow(val) {
+      console.log(1);
+      if (val) {
+        return this.unfoldKeys.name === val.name ? val.isShow : false;
       }
     }
   },
@@ -251,7 +277,8 @@ export default {
     }
   }
   .chat-main {
-    flex: 1;
+    min-height: 400px;
+    overflow: hidden;
     z-index: 98;
     background: #ffffff;
     .main-scroll {
