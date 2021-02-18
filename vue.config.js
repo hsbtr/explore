@@ -9,17 +9,19 @@ module.exports = {
   productionSourceMap: false,
   chainWebpack: config => {
     // 开启打包日志
-    config
-      .plugin("webpack-bundle-analyzer")
-      .use(require("webpack-bundle-analyzer").BundleAnalyzerPlugin);
-    // 压缩图片
-    config.module
-      .rule("images")
-      .test(/\.(gif|png|jpe?g|svg)$/i)
-      .use("image-webpack-loader")
-      .loader("image-webpack-loader")
-      .options({ bypassOnDebug: true })
-      .end();
+    if (process.env.NODE_ENV !== "development") {
+      config
+        .plugin("webpack-bundle-analyzer")
+        .use(require("webpack-bundle-analyzer").BundleAnalyzerPlugin);
+      // 压缩图片
+      config.module
+        .rule("images")
+        .test(/\.(gif|png|jpe?g|svg)$/i)
+        .use("image-webpack-loader")
+        .loader("image-webpack-loader")
+        .options({ bypassOnDebug: true })
+        .end();
+    }
   },
   configureWebpack: config => {
     const plugins = [];
@@ -89,7 +91,7 @@ module.exports = {
   devServer: {
     host: "0.0.0.0",
     port: 8081,
-    hot: true, // webpack模块 热更新
+    // hot: true, // webpack模块 热更新
     open: true, // 自动打开浏览器
     compress: true, // 启用gzip压缩
     https: true, // https协议

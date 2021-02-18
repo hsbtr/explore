@@ -277,6 +277,7 @@ export default {
     }
   }
   .chat-main {
+    flex: 1;
     min-height: 400px;
     overflow: hidden;
     z-index: 98;
@@ -376,6 +377,7 @@ export default {
         height: 50px;
         background-size: 100% 100%;
         background-repeat: no-repeat;
+        background-color: transparent;
       }
       .icon-v {
         background-image: url("../assets/img/icon-voice.png");

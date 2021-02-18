@@ -13,6 +13,7 @@
 <script>
 // 这里面处理mediaDevices老版兼容
 import "../../libs/navigator";
+import {Toast} from "vant";
 // 本机的视角
 export default {
   name: "VideoOneself",
@@ -51,7 +52,7 @@ export default {
       };
     },
     error(err) {
-      this.Toast.fail("设备调用摄像头失败！");
+      Toast("设备调用摄像头失败！");
       console.log(err.name + ":" + err.message);
     }
   },
