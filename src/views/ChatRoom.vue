@@ -13,7 +13,7 @@
         <router-link to="" class="icon-menu"></router-link>
       </div>
     </div>
-    <div class="chat-main">
+    <div class="chat-main" @click.stop="shutComponent">
       <ul class="main-scroll">
         <li
           :class="setClassName(val)"
@@ -154,13 +154,19 @@ export default {
     };
   },
   methods: {
+    // 信息长按事件
     showFunc() {},
+    // 打开功能组件
     openElement(val, key) {
       if (val && key) {
         if (this.currentComponent === val.componentName)
           return (this.currentComponent = "");
         this.currentComponent = val.componentName;
       }
+    },
+    // 聊天信息页点击事件 用来关闭功能组件
+    shutComponent() {
+      this.currentComponent = "";
     }
   },
   watch: {
@@ -293,8 +299,12 @@ export default {
             flex: 1;
             height: auto;
             span {
+              text-align: left;
               font-size: 16px;
-              color: #000000;
+              color: #ffffff;
+              padding: 10px;
+              border-radius: 5px;
+              background: #00bfff;
             }
           }
         }
