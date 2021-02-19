@@ -2,7 +2,12 @@
   <div class="more">
     <Swiper ref="mySwiper" :options="slideOptions">
       <swiper-slide v-for="(val, key) in moreList" :key="key">
-        <router-link to="" class="slide-item flex-x-cen flex-align-cen" v-for="(value, index) in val" :key="value.id">
+        <router-link
+          to=""
+          class="slide-item flex-x-cen flex-align-cen"
+          v-for="(value, index) in val"
+          :key="value.id"
+        >
           <span>{{ value.text + index }}</span>
         </router-link>
       </swiper-slide>

@@ -2,7 +2,7 @@
   <div class="chat-room flex-y">
     <div class="head-nav flex-x flex-align-cen">
       <div class="nav-back flex flex-align-cen">
-        <button @click="goBack"></button>
+        <button v-back></button>
         <div class="mess-num-bubble flex-x-cen flex-align-cen">
           <span>12</span>
         </div>
@@ -67,7 +67,7 @@
           @click="openElement(val, index)"
         ></button>
       </div>
-      <more-func v-if="returnShow(functionList[unfoldKeys.key])"></more-func>
+      <component :is="currentComponent"></component>
     </div>
   </div>
 </template>
@@ -83,7 +83,7 @@ export default {
       isVal: false, // 表明输入框是否有值
       textarea_rows: 1, // 表示textarea最大可现实行数
       current_text: "", // 当前输入框的内容
-      textarea_ht: 0, // 输入框的内容高度
+      textContentHeight: 0, // 输入框的内容高度
       chatRecord: [
         {
           id: uuid(),
@@ -120,7 +120,8 @@ export default {
       functionList: [
         {
           name: "voice",
-          className: "icon-v"
+          className: "icon-v",
+          isShow: false
         },
         {
           name: "picture",
@@ -145,41 +146,20 @@ export default {
         {
           name: "more",
           className: "icon-m",
-          isShow: false
+          isShow: false,
+          componentName: "more-func"
         }
       ], // 功能按钮列表
-      unfoldKeys: {
-        key: null,
-        name: ""
-      } // 组件集合
+      currentComponent: "" // 动态组件名
     };
   },
   methods: {
-    goBack() {
-      this.$router.back();
-    },
     showFunc() {},
     openElement(val, key) {
       if (val && key) {
-        if (val.isShow) {
-          val.isShow = false;
-          this.unfoldKeys = {
-            key: null,
-            name: ""
-          };
-          return;
-        }
-        val.isShow = true;
-        this.unfoldKeys = {
-          key: key,
-          name: val.name
-        };
-      }
-    },
-    returnShow(val) {
-      console.log(1);
-      if (val) {
-        return this.unfoldKeys.name === val.name ? val.isShow : false;
+        if (this.currentComponent === val.componentName)
+          return (this.currentComponent = "");
+        this.currentComponent = val.componentName;
       }
     }
   },
@@ -188,13 +168,13 @@ export default {
     current_text(val) {
       if (val) {
         this.isVal = true;
-        this.textarea_ht = this.$refs.textarea.scrollHeight;
+        this.textContentHeight = this.$refs.textarea.scrollHeight;
       } else {
         this.isVal = false;
       }
     },
     // 判断前后两次的内容高度变化 去除旧值为0的情况
-    textarea_ht(val, oldVal) {
+    textContentHeight(val, oldVal) {
       if (oldVal && val !== oldVal && val > oldVal && this.textarea_rows <= 6) {
         this.textarea_rows++;
       } else if (val < oldVal && this.textarea_rows > 1) {

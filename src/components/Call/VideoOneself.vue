@@ -13,7 +13,7 @@
 <script>
 // 这里面处理mediaDevices老版兼容
 import "../../libs/navigator";
-import {Toast} from "vant";
+import { Toast } from "vant";
 // 本机的视角
 export default {
   name: "VideoOneself",
