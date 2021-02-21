@@ -103,6 +103,16 @@ module.exports = {
         pathRewrite: {
           "^/api": ""
         }
+      },
+      "/socket.io": {
+        target: "http://localhost:7001",
+        ws: true,
+        changeOrigin: true
+      },
+      "/socket-node": {
+        target: "http://localhost:7001",
+        ws: true,
+        changeOrigin: true
       }
     }
   }

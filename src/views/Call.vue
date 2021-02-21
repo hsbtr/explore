@@ -4,7 +4,7 @@
     <video-oneself :stream-data="streamData"></video-oneself>
     <div class="but-footer">
       <button class="foot-item"></button>
-      <button class="foot-item bg-red">挂断</button>
+      <button class="foot-item bg-red" @click="hangUp">挂断</button>
       <button class="foot-item"></button>
     </div>
   </div>
@@ -15,13 +15,13 @@ import VideoOmari from "@/components/Call/VideoOmari";
 import VideoOneself from "@/components/Call/VideoOneself";
 // 这里面处理mediaDevices老版兼容
 import "../libs/navigator";
-import {Toast} from "vant";
 
 export default {
   name: "Call",
   data() {
     return {
-      streamData: null
+      streamData: null,
+      track: null
     };
   },
   methods: {
@@ -31,31 +31,22 @@ export default {
         // 最新标准API 内部处理了兼容老版
         navigator.mediaDevices
           .getUserMedia(constrains)
-          .then(this.success)
-          .catch(this.error);
+          .then(stream => {
+            console.log(stream);
+            this.streamData = stream;
+          })
+          .catch(err => {
+            this.$toast.fail("设备调用摄像头失败！");
+            console.log(err.name + ":" + err.message);
+          });
       }
     },
-    success(stream) {
-      const videos = this.$refs.localVideo;
-      console.log(stream);
-      if ("srcObject" in videos) {
-        try {
-          videos.srcObject = stream;
-        } catch (e) {
-          if (e.name !== "TypeError") throw e;
-          this.srcData = URL.createObjectURL(stream);
-        }
-      } else {
-        const compat = window.URL || window.webkitURL;
-        this.srcData = compat.createObjectURL(stream);
-      }
-      videos.onloadedmetadata = function() {
-        videos.play();
-      };
-    },
-    error(err) {
-      Toast("设备调用摄像头失败！");
-      console.log(err.name + ":" + err.message);
+    // 挂断
+    hangUp() {
+      if (!this.streamData) return;
+      this.streamData.getTracks()[0].stop();
+      this.streamData.getTracks()[1].stop();
+      this.$router.back();
     }
   },
   watch: {},
