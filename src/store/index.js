@@ -12,7 +12,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {},
-  mutations: {},
-  actions: {},
+  mutations: {
+    SOCKET_CONNECT(data) {
+      console.log(data);
+    }
+  },
+  actions: {
+    SOCKET_CONNECT(data) {
+      console.log(data);
+    }
+  },
   modules: modules
 });

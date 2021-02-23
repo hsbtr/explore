@@ -104,6 +104,11 @@ module.exports = {
           "^/api": ""
         }
       },
+      "/news": {
+        target: "http://localhost:7001",
+        ws: true,
+        changeOrigin: true
+      },
       "/socket.io": {
         target: "http://localhost:7001",
         ws: true,
