@@ -3,13 +3,14 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
+import bus from "./bus";
+import directive from "./directive";
+import { Toast } from "vant";
+// import VueSocketIO from "vue-socket.io";
+import SocketIo from "socket.io-client";
+import VueSocketIO from "@/plugin/socket.io";
 // import VueAxios from "vue-axios";
 // import http from "./http";
-import bus from "./bus";
-import extend from "./directive";
-import { Toast } from "vant";
-import VueSocketIO from "vue-socket.io";
-import SocketIo from "socket.io-client";
 import "./css/base.css";
 import "vant/lib/index.css";
 import "nprogress/nprogress.css";
@@ -20,9 +21,9 @@ const options = {
 };
 
 // Vue.use(VueAxios, http);
-Vue.use(bus);
-Vue.use(extend);
 Vue.use(Toast);
+Vue.use(bus);
+Vue.use(directive);
 Vue.use(
   new VueSocketIO({
     debug: true,
