@@ -81,7 +81,6 @@ export default class EventEmitter {
       let prefixed_event = this.actionPrefix + event;
       for (let key in this.store._actions) {
         let action = key.split("/").pop();
-
         if (action === prefixed_event) {
           Logger.info(`Dispatching Action: ${key}, Data:`, args);
 
@@ -90,14 +89,11 @@ export default class EventEmitter {
       }
 
       if (this.mutationPrefix) {
-        let prefixed_event = this.mutationPrefix + event;
-
+        let prefixed_event = this.mutationPrefix + event.toLocaleUpperCase();
         for (let key in this.store._mutations) {
           let mutation = key.split("/").pop();
-
           if (mutation === prefixed_event) {
             Logger.info(`Commiting Mutation: ${key}, Data:`, args);
-
             this.store.commit(key, args);
           }
         }

@@ -22,7 +22,7 @@ const axios = Axios.create({
 if (process.env.NODE_ENV === "development") {
   axios.defaults.baseURL = "/api/"; //开发环境下的代理地址，解决本地跨域
 } else {
-  axios.defaults.baseURL = process.env.BASE_URL; //生产环境下的地址
+  axios.defaults.baseURL = process.env.VUE_APP_DISCERN; //生产环境下的地址
 }
 // 请求拦截器
 axios.interceptors.request.use(

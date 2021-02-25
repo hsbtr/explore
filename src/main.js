@@ -17,9 +17,9 @@ import "nprogress/nprogress.css";
 
 // eslint-disable-next-line no-unused-vars
 const options = {
-  path: "/news/"
+  // path: process.env.VUE_APP_DISCERN,
+  rejectUnauthorized: false
 };
-
 // Vue.use(VueAxios, http);
 Vue.use(Toast);
 Vue.use(bus);
@@ -27,10 +27,10 @@ Vue.use(directive);
 Vue.use(
   new VueSocketIO({
     debug: true,
-    connection: SocketIo("http://localhost:7001"),
+    connection: SocketIo("http://localhost:7001", options),
     vuex: {
       store,
-      actionPrefix: "SOCKET_",
+      actionPrefix: "socket_",
       mutationPrefix: "SOCKET_"
     }
   })
