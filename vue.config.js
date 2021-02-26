@@ -123,12 +123,18 @@ module.exports = {
       "/socket.io": {
         target: "http://hsbtr.cn:7001",
         ws: true,
-        changeOrigin: true
+        changeOrigin: true,
+        // pathRewrite: {
+        //   "^/socket.io": "/socket.io/"
+        // }
       },
       "/socket-node": {
         target: "http://hsbtr.cn:7001",
         ws: true,
-        changeOrigin: true
+        changeOrigin: true,
+        // pathRewrite: {
+        //   "^/socket-node": "/socket-node/"
+        // }
       }
     }
   }
