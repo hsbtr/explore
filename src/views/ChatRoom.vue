@@ -1,18 +1,26 @@
 <template>
   <div class="chat-room flex-y">
-    <div class="head-nav flex-x flex-align-cen">
-      <div class="nav-back flex flex-align-cen">
-        <button v-back></button>
-        <div class="mess-num-bubble flex-x-cen flex-align-cen">
+    <nav-bar>
+      <template v-slot:bubble>
+        <div class="bubbles flex-x-cen flex-align-cen">
           <span>12</span>
         </div>
-      </div>
-      <span class="title">狗子</span>
-      <div class="menu-box flex-x flex-align-cen">
+      </template>
+      <template v-slot:bar-title>
+        <div class="bar-page-name flex-x-cen">
+          <span>个人</span>
+        </div>
+        <div class="bar-page-status flex-x-cen">
+          <router-link to="">
+            在线
+          </router-link>
+        </div>
+      </template>
+      <template v-slot:menu-box>
         <router-link to="" class="icon-phone"></router-link>
         <router-link to="" class="icon-menu"></router-link>
-      </div>
-    </div>
+      </template>
+    </nav-bar>
     <div class="chat-main" @click.stop="shutComponent">
       <ul class="main-scroll">
         <li
@@ -57,7 +65,7 @@
             ref="textarea"
           ></textarea>
         </label>
-        <button :class="{ 'change-but-bg': isVal }">发送</button>
+        <button :class="{ 'change-but-bg': !!current_text }">发送</button>
       </div>
       <div class="action-func flex-x flex-align-cen">
         <button
@@ -75,12 +83,12 @@
 <script>
 import { uuid } from "@/libs/utils";
 import MoreFunc from "@/components/ChatRoom/MoreFunc";
+import NavBar from "@/components/Base/NavBar";
 
 export default {
   name: "ChatRoom",
   data() {
     return {
-      isVal: false, // 表明输入框是否有值
       textarea_rows: 1, // 表示textarea最大可现实行数
       current_text: "", // 当前输入框的内容
       textContentHeight: 0, // 输入框的内容高度
@@ -167,16 +175,17 @@ export default {
     // 聊天信息页点击事件 用来关闭功能组件
     shutComponent() {
       this.currentComponent = "";
+    },
+    // 设置列表样式
+    setClassName(val) {
+      return ["mess-item flex-y", val.is_self ? "flex-x-end" : "flex-x-start"];
     }
   },
   watch: {
     // 监听输入框中的值变化 获取当前内容的高度 同时给按钮说明当前有值
     current_text(val) {
       if (val) {
-        this.isVal = true;
         this.textContentHeight = this.$refs.textarea.scrollHeight;
-      } else {
-        this.isVal = false;
       }
     },
     // 判断前后两次的内容高度变化 去除旧值为0的情况
@@ -188,18 +197,10 @@ export default {
       }
     }
   },
-  computed: {
-    setClassName() {
-      return function(val) {
-        return [
-          "mess-item flex-y",
-          val.is_self ? "flex-x-end" : "flex-x-start"
-        ];
-      };
-    }
-  },
+  computed: {},
   components: {
-    MoreFunc
+    MoreFunc,
+    NavBar
   },
   created() {},
   mounted() {}
@@ -209,59 +210,6 @@ export default {
 <style scoped lang="scss">
 .chat-room {
   height: 100%;
-  .head-nav {
-    height: 100px;
-    padding: 20px 15px;
-    z-index: 99;
-    box-shadow: 0 1px 5px rgba(128, 128, 128, 0.4);
-    background: #ffffff;
-    .nav-back {
-      width: 120px;
-      height: 60px;
-      button {
-        width: 60px;
-        height: 100%;
-        background: url("../assets/img/icon-back.png") no-repeat 0 0 / 100% 100%;
-      }
-      .mess-num-bubble {
-        width: 35px;
-        height: 35px;
-        overflow: hidden;
-        border-radius: 50%;
-        background: #ff0000;
-        span {
-          flex: 1;
-          text-align: center;
-          line-height: 35px;
-          font-size: 8px;
-          color: #ffffff;
-        }
-      }
-    }
-    .title {
-      flex: 1;
-      height: 80px;
-      line-height: 80px;
-      text-align: center;
-      color: #000000;
-      font-size: 26px;
-      font-weight: 500;
-    }
-    .menu-box {
-      width: 120px;
-      height: 60px;
-      a {
-        width: 50px;
-        height: 50px;
-      }
-      .icon-phone {
-        background: url("../assets/img/icon-phone.png") no-repeat 0 0 /100% 100%;
-      }
-      .icon-menu {
-        background: url("../assets/img/icon-menu.png") no-repeat 0 0 /100% 100%;
-      }
-    }
-  }
   .chat-main {
     flex: 1;
     min-height: 400px;
@@ -277,7 +225,7 @@ export default {
           margin: 15px 0;
           color: #000000;
           font: {
-            size: 10px;
+            size: 16px;
             weight: 400;
           }
         }
@@ -290,6 +238,7 @@ export default {
             overflow: hidden;
             margin: 0 10px;
             border-radius: 50%;
+            border: none;
             img {
               width: 100%;
               height: 100%;
@@ -297,10 +246,10 @@ export default {
           }
           .text-box {
             flex: 1;
-            height: auto;
+            height: 100%;
             span {
               text-align: left;
-              font-size: 16px;
+              font-size: 18px;
               color: #ffffff;
               padding: 10px;
               border-radius: 5px;
@@ -328,18 +277,17 @@ export default {
       overflow: hidden;
       .input-box {
         flex: 1;
-        max-height: 215px;
+        //max-height: 215px;
         overflow: hidden;
+        padding: 12px 10px;
         border-radius: 20px;
+        background: #ffffff;
         textarea {
           width: 100%;
           height: 100%;
-          padding: 12px 10px;
           border: none;
           outline: none;
           z-index: 99;
-          border-radius: 20px;
-          background: #ffffff;
           font: {
             size: 16px;
             weight: 400;

@@ -17,6 +17,7 @@ export default [
     path: "/Home",
     name: "Home",
     meta: {
+      title: "首页",
       types: "TabBar",
       keys: 0
     },
@@ -26,6 +27,7 @@ export default [
     path: "/Find",
     name: "Find",
     meta: {
+      title: "发现",
       types: "TabBar",
       keys: 1
     },
@@ -35,6 +37,7 @@ export default [
     path: "/Mess",
     name: "Mess",
     meta: {
+      title: "消息",
       types: "TabBar",
       keys: 2
     },
@@ -68,6 +71,7 @@ export default [
     path: "/My",
     name: "My",
     meta: {
+      title: "我的",
       types: "TabBar",
       keys: 3
     },

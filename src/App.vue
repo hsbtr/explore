@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view />
+    <router-view :page-name="pageName" />
     <tab-bar :tab-key="tabBarKey" v-show="tabBarShow"></tab-bar>
   </div>
 </template>
@@ -13,15 +13,17 @@ export default {
   data() {
     return {
       tabBarKey: 0,
-      tabBarShow: true
+      tabBarShow: true,
+      pageName: ""
     };
   },
   computed: {},
   watch: {
     $route(to, from) {
+      console.log(to);
       console.log(from);
+      if (to.meta.title) this.pageName = to.meta.title;
       if (to.meta.types === "TabBar") {
-        console.log(to);
         this.tabBarShow = true;
         this.tabBarKey = to.meta.keys;
       } else {
@@ -50,7 +52,6 @@ export default {
 <style lang="scss">
 #app {
   height: 100%;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

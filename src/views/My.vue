@@ -1,10 +1,22 @@
 <template>
-  <div></div>
+  <div>
+    <user-release></user-release>
+  </div>
 </template>
 
 <script>
+import UserRelease from "@/components/my/UserRelease";
 export default {
-  name: "My"
+  name: "My",
+  data() {
+    return {};
+  },
+  methods: {},
+  computed: {},
+  watch: {},
+  components: {
+    UserRelease,
+  }
 };
 </script>
 

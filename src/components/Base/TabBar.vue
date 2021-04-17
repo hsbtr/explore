@@ -1,16 +1,13 @@
 <template>
   <div class="tab-bar">
     <router-link
-      :to="val.src"
+      :to="setToLink(val)"
       class="item"
       v-for="(val, index) in tabBarList"
       :key="val.id"
       @click.native="itemAction(val, index)"
     >
-      <img
-        :src="[actionItem === index ? val.selectIcon : val.defaultIcon]"
-        alt=""
-      />
+      <img :src="setIconLink(val, index)" alt="" />
       <span :class="[actionItem === index ? 'select-text' : '']">{{
         val.text
       }}</span>
@@ -19,8 +16,9 @@
 </template>
 
 <script>
-import { getTabBar } from "@/api/base";
-import { localStorageSet, localStorageGet, uuid } from "@/libs/utils";
+import { mapState, mapActions } from "vuex";
+import { rewriteDns } from "@/libs/utils";
+
 export default {
   name: "TabBar",
   props: {
@@ -34,102 +32,47 @@ export default {
   },
   data() {
     return {
-      tabBarList: [],
       actionItem: 0,
       isAsk: false
     };
   },
-  computed: {},
+  computed: {
+    ...mapState(["tabBarList"])
+  },
   watch: {
     tabKey(val) {
       this.actionItem = val;
     }
   },
   methods: {
-    /**
-     * 查询底部按钮列表
-     * */
-    getTabBarLst() {
-      let _this = this;
-      let tabBar = localStorageGet("tabBarList");
-      let tabList = [
-        {
-          id: uuid(),
-          name: "home",
-          text: "首页",
-          sort: 1,
-          src: "/Home",
-          defaultIcon: require("../../assets/img/home.png"),
-          selectIcon: require("../../assets/img/home1.png")
-        },
-        {
-          id: uuid(),
-          name: "find",
-          text: "发现",
-          sort: 2,
-          src: "/Find",
-          defaultIcon: require("../../assets/img/find.png"),
-          selectIcon: require("../../assets/img/find1.png")
-        },
-        {
-          id: uuid(),
-          name: "mess",
-          text: "消息",
-          sort: 3,
-          src: "/Mess",
-          defaultIcon: require("../../assets/img/mess.png"),
-          selectIcon: require("../../assets/img/mess1.png")
-        },
-        {
-          id: uuid(),
-          name: "my",
-          text: "我的",
-          sort: 4,
-          src: "/My",
-          defaultIcon: require("../../assets/img/my.png"),
-          selectIcon: require("../../assets/img/my1.png")
-        }
-      ];
-      if (_this.isAsk) {
-        return;
-      }
-      getTabBar({ is: 1 })
-        .then(res => {
-          console.log(res);
-          if (res.result && res.state === 200) {
-            let data = res.result;
-            for (let i = 0; i < data.length; i++) {
-              if (data[i].name) {
-                data[i]["src"] =
-                  "/" +
-                  data[i].name.slice(0, 1).toUpperCase() +
-                  data[i].name.slice(1);
-              }
-            }
-            _this.tabBarList = data;
-            localStorageSet("tabBarList", data);
-            _this.isAsk = true;
-          } else {
-            if (!tabBar) tabBar = tabList;
-            _this.tabBarList = tabBar;
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          if (!tabBar) tabBar = tabList;
-          _this.tabBarList = tabBar;
-        });
-    },
-    /**
-     * tab-item 选中
-     * */
+    ...mapActions(["getTabBarList"]),
+    // tab-item 选中
     itemAction(val, index) {
       this.actionItem = index;
+    },
+    // 设置路由跳转地址
+    setToLink(val) {
+      if (val.src) {
+        return val.src;
+      } else {
+        if (val.name) {
+          return "/" + val.name.slice(0, 1).toUpperCase() + val.name.slice(1);
+        }
+      }
+    },
+    // 设置icon图标的链接
+    setIconLink(val, index) {
+      if (val.defaultIcon && val.selectIcon) {
+        return this.actionItem === index
+          ? rewriteDns(val.selectIcon)
+          : rewriteDns(val.defaultIcon);
+      }
+      return "";
     }
   },
   beforeCreate() {},
   created() {
-    this.getTabBarLst();
+    this.getTabBarList({ type: 1 });
   },
   mounted() {}
 };
@@ -145,6 +88,8 @@ export default {
   position: fixed;
   bottom: 0;
   left: 0;
+  box-shadow: 0 -2px 2px rgba(211, 211, 211, 0.8);
+  background: #ffffff;
   .item {
     flex: 1;
     //height: 60px;

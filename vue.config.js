@@ -97,7 +97,7 @@ module.exports = {
     https: true, // https协议
     proxy: {
       "/api": {
-        target: "http://hsbtr.cn:7001",
+        target: "http://localhost:7001",
         ws: true,
         changeOrigin: true,
         pathRewrite: {
@@ -121,20 +121,25 @@ module.exports = {
         }
       },
       "/socket.io": {
-        target: "http://hsbtr.cn:7001",
+        target: "http://localhost:7001",
         ws: true,
-        changeOrigin: true,
+        changeOrigin: true
         // pathRewrite: {
         //   "^/socket.io": "/socket.io/"
         // }
       },
       "/socket-node": {
-        target: "http://hsbtr.cn:7001",
+        target: "http://localhost:7001",
         ws: true,
-        changeOrigin: true,
+        changeOrigin: true
         // pathRewrite: {
         //   "^/socket-node": "/socket-node/"
         // }
+      },
+      "/sockjs-node": {
+        target: "http://localhost:7001",
+        ws: true,
+        changeOrigin: true
       }
     }
   }

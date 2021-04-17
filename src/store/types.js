@@ -1,8 +1,16 @@
 export const UPDATE = "UPDATE";
 
 /**
+ * base 项目基础常量
+ */
+
+export const SET_TAB_LIST = "SET_TAB_LIST";
+export const SET_TAB_IS_ASK = "TAB_IS_ASK";
+
+/**
  * socket 事件
  */
+
 export const SOCKET_CONNECT = "SOCKET_CONNECT"; // 在连接到命名空间时触发（包括成功的重新连接）。
 export const SOCKET_ERROR = "SOCKET_ERROR"; // 发生错误时触发
 export const SOCKET_DISCONNECT = "SOCKET_DISCONNECT"; // 断开连接时触发。可能的断开连接原因列表
