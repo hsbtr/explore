@@ -3,7 +3,6 @@ import Qs from "qs";
 import { getCookie } from "./tool";
 
 const axios = Axios.create({
-  baseURL: "/api/",
   timeout: 5000,
   // `transformRequest` 允许在向服务器发送前，修改请求数据
   // 只能用在 'PUT', 'POST' 和 'PATCH' 这几个请求方法
@@ -20,9 +19,11 @@ const axios = Axios.create({
 });
 
 if (process.env.NODE_ENV === "development") {
-  axios.defaults.baseURL = "/api/"; //开发环境下的代理地址，解决本地跨域
+  axios.defaults.baseURL = process.env.VUE_APP_API || "/api/"; //开发环境下的代理地址，解决本地跨域
+} else if (process.env.NODE_ENV === "test") {
+  axios.defaults.baseURL = process.env.VUE_APP_API || "/test/"; //生产环境下的地址
 } else {
-  axios.defaults.baseURL = process.env.VUE_APP_DISCERN; //生产环境下的地址
+  axios.defaults.baseURL = process.env.VUE_APP_API || "/save/";
 }
 // 请求拦截器
 axios.interceptors.request.use(

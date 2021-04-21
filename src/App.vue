@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view :page-name="pageName" />
-    <tab-bar :tab-key="tabBarKey" v-show="tabBarShow"></tab-bar>
+    <tab-bar :current-page-path="currentPagePath" v-show="tabBarShow"></tab-bar>
   </div>
 </template>
 <script>
@@ -14,7 +14,9 @@ export default {
     return {
       tabBarKey: 0,
       tabBarShow: true,
-      pageName: ""
+      pageName: "",
+      currentPage: {},
+      currentPagePath: ""
     };
   },
   computed: {},
@@ -22,13 +24,16 @@ export default {
     $route(to, from) {
       console.log(to);
       console.log(from);
-      if (to.meta.title) this.pageName = to.meta.title;
-      if (to.meta.types === "TabBar") {
-        this.tabBarShow = true;
-        this.tabBarKey = to.meta.keys;
-      } else {
-        this.tabBarShow = false;
+      if (to.path) {
+        const arr = ["/Home", "/Find", "/Mess", "/My"];
+        const index = to.path.indexOf("/", 1);
+        this.tabBarShow =
+          index !== -1
+            ? arr.indexOf(to.path.slice(0, index)) !== -1
+            : arr.indexOf(to.path) !== -1;
+        this.currentPagePath = to.path;
       }
+      if (to.meta.title) this.pageName = to.meta.title;
     }
   },
   methods: {

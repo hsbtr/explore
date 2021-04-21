@@ -1,6 +1,6 @@
 <template>
   <div class="chat-room flex-y">
-    <nav-bar>
+    <nav-bar :is-button="true">
       <template v-slot:bubble>
         <div class="bubbles flex-x-cen flex-align-cen">
           <span>12</span>

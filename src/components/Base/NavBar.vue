@@ -1,7 +1,7 @@
 <template>
   <div class="nav-bar flex-x flex-align-cen">
     <div class="bar-left flex-x flex-align-cen">
-      <button v-back></button>
+      <button v-back v-show="isButton"></button>
       <slot name="bubble"></slot>
     </div>
     <div class="bar-cen-box flex-y flex-x-cen flex-align-cen">
@@ -23,6 +23,10 @@ export default {
   props: {
     title: {
       type: String
+    },
+    isButton: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -41,6 +45,7 @@ export default {
   height: 120px;
   padding: 20px 15px;
   z-index: 99;
+  position: relative;
   box-shadow: 0 1px 5px rgba(128, 128, 128, 0.4);
   background: #ffffff;
   .bar-left,
@@ -68,7 +73,6 @@ export default {
         //-webkit-transform: scale(0.75, 0.75);
       }
     }
-
   }
   .bar-right {
     a {

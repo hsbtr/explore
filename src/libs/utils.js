@@ -13,7 +13,11 @@ export const localStorageSet = (key, value) => {
  * @param { String } key  属性 存储名
  */
 export const localStorageGet = key => {
-  return JSON.parse(localStorage.getItem(key));
+  try {
+    return sessionStorage.getItem(key);
+  } catch (err) {
+    return JSON.parse(localStorage.getItem(key));
+  }
 };
 /**
  * localStorage 删除
@@ -51,7 +55,11 @@ export const sessionStorageSet = (key, value) => {
  * @param { String } key  属性
  */
 export const sessionStorageGet = key => {
-  return sessionStorage.getItem(key);
+  try {
+    return sessionStorage.getItem(key);
+  } catch (err) {
+    return JSON.parse(sessionStorage.getItem(key));
+  }
 };
 /**
  * sessionStorage 删除
@@ -99,6 +107,6 @@ export const rewriteDns = url => {
   if (process.env.NODE_ENV !== "development") return url;
   return url.replace(
     "http://localhost:7001",
-    tcpDns() + process.env.VUE_APP_DISCERN.slice(0, -1)
+    tcpDns() + process.env.VUE_APP_API.slice(0, -1)
   );
 };
