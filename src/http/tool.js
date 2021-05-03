@@ -1,5 +1,5 @@
 import Qs from "qs";
-import axios from "axios";
+import Axios from "axios";
 
 /**
  * 获取cookie 上的csrfToken
@@ -27,7 +27,7 @@ export function addPendingRequest(config) {
   const requestKey = generateReqKey(config);
   config.cancelToken =
     config.cancelToken ||
-    new axios.CancelToken(cancel => {
+    new Axios.CancelToken(cancel => {
       if (!pendingRequest.has(requestKey)) {
         pendingRequest.set(requestKey, cancel);
       }
