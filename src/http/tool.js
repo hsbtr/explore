@@ -1,5 +1,5 @@
 import Qs from "qs";
-import axios from "@/http/index";
+import axios from "axios";
 
 /**
  * 获取cookie 上的csrfToken
