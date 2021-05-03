@@ -1,6 +1,6 @@
 import Axios from "axios";
 import Qs from "qs";
-import { getCookie } from "./tool";
+import { getCookie, addPendingRequest, removePendingRequest } from "./tool";
 
 const axios = Axios.create({
   timeout: 5000,
@@ -25,6 +25,7 @@ if (process.env.NODE_ENV === "development") {
 } else {
   axios.defaults.baseURL = process.env.VUE_APP_API || "/save/";
 }
+
 // 请求拦截器
 axios.interceptors.request.use(
   config => {
@@ -35,16 +36,10 @@ axios.interceptors.request.use(
     if (localStorage.getItem("Authorization")) {
       config.headers.Authorization = localStorage.getItem("Authorization");
     }
-    if (
-      config.method.toLocaleLowerCase() === "post" ||
-      config.method.toLocaleLowerCase() === "put"
-    ) {
+    if (["post", "put"].includes(config.method.toLocaleLowerCase())) {
       // 参数统一处理，请求都使用data传参
       config.data = config.data.data;
-    } else if (
-      config.method.toLocaleLowerCase() === "get" ||
-      config.method.toLocaleLowerCase() === "delete"
-    ) {
+    } else if (["get", "delete"].includes(config.method.toLocaleLowerCase())) {
       // 参数统一处理
       config.params = config.data;
     } else {
@@ -64,6 +59,8 @@ axios.interceptors.request.use(
           },
       config.headers
     );
+    removePendingRequest(config);
+    addPendingRequest(config);
     return config;
   },
   error => {
@@ -74,14 +71,16 @@ axios.interceptors.request.use(
 // 响应拦截
 axios.interceptors.response.use(
   response => {
-    if (response.status === 200) {
-      return response.data;
-    }
+    removePendingRequest(response.config);
+    return response.data;
   },
   error => {
     const { data, status } = error.response;
     const { message } = data;
-    if (error) {
+    removePendingRequest(error.config || {});
+    if (axios.isCancel(error)) {
+      console.log("已取消的重复请求： " + error.message);
+    } else {
       console.log(message, status);
     }
     return Promise.reject(error);

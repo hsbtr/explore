@@ -1,3 +1,4 @@
+/*
 import {
   SOCKET_CONNECT,
   SOCKET_ERROR,
@@ -13,6 +14,7 @@ import {
   SOCKET_PING,
   SOCKET_PONG
 } from "../types";
+*/
 
 const state = {
   person: 1
@@ -50,8 +52,7 @@ const actions = {
   // 当从服务器接收到一个Pong时触发。
   socket_pong() {},
   // 自定义事件 初始化
-  socket_init() {},
-
+  socket_init() {}
 };
 
 export default {
